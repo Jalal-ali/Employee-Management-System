@@ -1,10 +1,13 @@
 package ui;
 
+import controllers.AuthController;
+
 import javax.swing.*;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class LoginScreen {
+    AuthController auth = new AuthController();
     JFrame LoginFrame = new JFrame("Login");
     public LoginScreen() {
 
@@ -27,5 +30,11 @@ public class LoginScreen {
         LoginFrame.add(loginBtn);
 
         LoginFrame.setVisible(true);
+
+        loginBtn.addActionListener(e -> {
+            String user = usernameField.getText();
+            String pass = new String(passwordField.getPassword());
+            auth.login(user,pass);
+        });
     }
 }

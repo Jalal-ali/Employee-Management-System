@@ -108,12 +108,37 @@ public class FileHandler {
 //    x --------- Employees CRUD operations ended ------------------ x
 
 //    x --------- Auth operations started ------------------ x
+//    register
     public void register(String user, String pass){
         try{
             FileWriter writer = new FileWriter("src/data/users.txt", true);
             writer.write(user + "," + pass + "\n");
             writer.close();
             System.out.println("Registered Successfully!");
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+    }
+//    login
+    public void login(String reqUser, String reqPass){
+        try{
+            FileReader reader = new FileReader("src/data/users.txt");
+            Scanner sc = new Scanner(reader);
+            while(sc.hasNextLine()){
+                String line = sc.nextLine();
+                String[] data = line.split(",");
+                String userName = data[0];
+                String pass = data[1];
+                if(userName.equals(reqUser) && reqPass.equals(pass)){
+                    System.out.println("entered User:" + reqUser + ", Pass: " + reqPass);
+                    System.out.println("Login Successfully!");
+                    return;
+                }else{
+                    System.out.println("Invalid credentials.");
+                }
+            }
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());

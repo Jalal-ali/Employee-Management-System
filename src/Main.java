@@ -1,9 +1,12 @@
 import controllers.AuthController;
 import controllers.EmployeesController;
+import ui.LoginScreen;
+import ui.RegisterScreen;
 
 void main(String[] args) {
   EmployeesController e = new EmployeesController();
   AuthController auth = new AuthController();
+//  RegisterScreen register =
   Scanner sc = new Scanner(System.in);
 
   while (true) {
@@ -12,7 +15,8 @@ void main(String[] args) {
     System.out.println("3. Update an Employee");
     System.out.println("4. Delete an Employee");
     System.out.println("5. Register");
-    System.out.println("5. Exit");
+    System.out.println("6. Login");
+    System.out.println("7. Exit");
     System.out.print("Choice (1-5): ");
     int choice = sc.nextInt();
 
@@ -21,7 +25,8 @@ void main(String[] args) {
       case 2 -> e.showEmployees();
       case 3 -> e.updateEmployee();
       case 4 -> e.deleteEmployee();
-//      case 5 -> auth.signup();
+      case 5 -> new RegisterScreen();
+      case 6 -> new LoginScreen();
 //      case 5 -> System.exit(0);
       default -> System.out.println("Invalid");
     }

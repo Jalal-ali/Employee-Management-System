@@ -19,6 +19,7 @@ public class AuthController {
 //            System.out.println("Something went wrong, Try again!");
 //        }
 //    }
+//    signup
     public void signup(String user, String pass){
         try {
             fileHandler.register(user,pass);
@@ -27,5 +28,8 @@ public class AuthController {
             System.out.println(ex.getMessage());
             System.out.println("Something went wrong, Try again!");
         }
+    }
+    public void login(String user, String pass){
+        fileHandler.login(user,pass);
     }
 }

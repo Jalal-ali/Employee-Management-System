@@ -22,13 +22,21 @@ public class RegisterScreen {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(50, 70, 180, 25);
 
-        JButton RegisterBtn = new JButton("Register");
-        RegisterBtn.setBounds(90, 110, 100, 30);
+        JButton registerBtn = new JButton("Register");
+        registerBtn.setBounds(90, 110, 100, 30);
 
         RegisterScreen.add(usernameField);
         RegisterScreen.add(passwordField);
-        RegisterScreen.add(RegisterBtn);
+        RegisterScreen.add(registerBtn);
 
         RegisterScreen.setVisible(true);
+
+        registerBtn.addActionListener(e -> {
+            String user = usernameField.getText();
+
+            String pass = new String(passwordField.getPassword());
+            auth.signup(user, pass);
+        });
+
     }
 }
