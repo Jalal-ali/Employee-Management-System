@@ -52,7 +52,6 @@ public class HomeScreen {
         members.setFont(new Font("Arial", Font.PLAIN, 13));
         members.setBounds(70, 400, 200, 70);
 
-
         homeFrame.add(title);
         homeFrame.add(subtitle);
         homeFrame.add(loginBtn);

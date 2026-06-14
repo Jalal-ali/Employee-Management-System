@@ -99,7 +99,7 @@ public class LoginScreen {
                         JOptionPane.INFORMATION_MESSAGE
                 );
 
-                new LoginScreen();
+                new Dashboard();
                 loginFrame.dispose();
             }else{
                 JOptionPane.showMessageDialog(loginFrame,
