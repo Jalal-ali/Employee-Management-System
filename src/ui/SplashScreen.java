@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SplashScreen  {
-    JFrame splashFrame = new JFrame("Employee Management System");
+    public JFrame splashFrame = new JFrame("Employee Management System");
     private JProgressBar progressBar;
     private JLabel loadingLabel;
 
@@ -47,14 +47,11 @@ public class SplashScreen  {
 
     private void startLoading() {
 
-        Timer timer = new Timer(40, null);
+        Timer timer = new Timer(60, null);
 
         timer.addActionListener(e -> {
-
             int value = progressBar.getValue();
-
             progressBar.setValue(value + 1);
-
             if (value >= 99) {
                 timer.stop();
                 splashFrame.dispose();

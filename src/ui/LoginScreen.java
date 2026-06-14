@@ -13,6 +13,7 @@ public class LoginScreen {
 
 //        setTitle("Login");
         LoginFrame.setSize(300, 200);
+        LoginFrame.setLocationRelativeTo(null);
         LoginFrame.setLayout(null);
         LoginFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
