@@ -111,7 +111,9 @@ public class FileHandler {
     public void register(String user, String pass){
         try{
             FileWriter writer = new FileWriter("src/data/users.txt", true);
-            writer.write();
+            writer.write(user + "," + pass + "\n");
+            writer.close();
+            System.out.println("Registered Successfully!");
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
