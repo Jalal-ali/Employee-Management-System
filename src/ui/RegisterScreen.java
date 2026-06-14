@@ -7,7 +7,7 @@ import javax.swing.*;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class RegisterScreen {
-    JFrame RegisterScreen = new JFrame("Login");
+    JFrame RegisterScreen = new JFrame("Register");
     AuthController auth = new AuthController();
     public RegisterScreen() {
 
