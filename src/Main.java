@@ -21,7 +21,7 @@ void main(String[] args) {
       case 2 -> e.showEmployees();
       case 3 -> e.updateEmployee();
       case 4 -> e.deleteEmployee();
-      case 5 -> auth.signup();
+//      case 5 -> auth.signup();
 //      case 5 -> System.exit(0);
       default -> System.out.println("Invalid");
     }
