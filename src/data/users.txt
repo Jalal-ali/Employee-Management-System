@@ -1,7 +1,1 @@
-jalal,abcd123
-umar,abcd4321
-jalal ali,fdgfdg
-test ,1234
-hello,321
-hello123,321
-,dsfdsf
+jalal,1234

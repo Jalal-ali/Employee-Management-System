@@ -12,33 +12,72 @@ public class FileHandler {
 //   x --------- Employees CRUD operations started ------------------ x
 
     //    add to file
-    public void saveEmployee(Employee emp){
+    public boolean saveEmployee(Employee emp){
         try{
+            FileReader reader = new FileReader("src/data/employees.txt");
+            Scanner sc =new Scanner(reader);
+            while(sc.hasNextLine()){
+                String line = sc.nextLine();
+                String[] data = line.split(",");
+                int id = Integer.parseInt(data[0]);
+                if(id == emp.id){
+                    return false ;
+                }
+            }
             FileWriter writer = new FileWriter("src/data/employees.txt", true);
             writer.write(emp.toString() + "\n");
             writer.close();
+            return true;
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            return false;
         }
     }
     //   Read from file
-    public void displayEmployees(){
+    public String displayEmployees(){
         try{
             int count = 0 ;
             FileReader reader = new FileReader("src/data/employees.txt");
             Scanner sc = new Scanner(reader);
 
             while(sc.hasNextLine()){
-                String fileData = sc.nextLine();
-                count++ ;
-                System.out.println(count + ". " + fileData);
+                String line = sc.nextLine();
+                if(line.length() > 0){
+
+                    count++ ;
+                }
+//                System.out.println(count + ". " + line);
+            }
+            sc.close();
+            return String.valueOf(count);
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return null ;
+    }
+//    search employee
+    public String searchEmployee(int targetedId){
+        try{
+            FileReader reader = new FileReader("src/data/employees.txt");
+            Scanner sc = new Scanner(reader);
+
+            while(sc.hasNextLine()){
+                String line = sc.nextLine();
+                String[] data = line.split(",");
+                int id = Integer.parseInt(data[0]);
+                if(id == targetedId){
+                    line = data[1] ;
+                    System.out.println("emp :" + line);
+                    return line ;
+                }
             }
             sc.close();
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
         }
-
+        return null;
     }
     //    update
     public void update(int targetId, String newName, String newDep){

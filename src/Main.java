@@ -1,4 +1,5 @@
 import controllers.EmployeesController;
+import fileHandler.FileHandler;
 import ui.LoginScreen;
 import ui.RegisterScreen;
 import ui.SplashScreen;
@@ -7,6 +8,7 @@ import javax.swing.*;
 
 void main(String[] args) {
   EmployeesController e = new EmployeesController();
+  FileHandler fileHandler = new FileHandler();
   Scanner sc = new Scanner(System.in);
   SwingUtilities.invokeLater(() -> {
     SplashScreen splash = new SplashScreen();
@@ -30,6 +32,7 @@ void main(String[] args) {
       case 4 -> e.deleteEmployee();
       case 5 -> new RegisterScreen();
       case 6 -> new LoginScreen();
+      case 7 -> System.out.println(fileHandler.searchEmployee(10));
 //      case 5 -> System.exit(0);
       default -> System.out.println("Invalid");
     }
