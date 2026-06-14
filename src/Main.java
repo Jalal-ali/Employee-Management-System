@@ -1,4 +1,3 @@
-import controllers.AuthController;
 import controllers.EmployeesController;
 import ui.LoginScreen;
 import ui.RegisterScreen;
@@ -8,7 +7,6 @@ import javax.swing.*;
 
 void main(String[] args) {
   EmployeesController e = new EmployeesController();
-  AuthController auth = new AuthController();
   Scanner sc = new Scanner(System.in);
   SwingUtilities.invokeLater(() -> {
     SplashScreen splash = new SplashScreen();

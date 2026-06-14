@@ -1,8 +1,6 @@
 package ui;
 
-import controllers.AuthController;
 import fileHandler.FileHandler;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -79,6 +77,15 @@ public class RegisterScreen {
         registerBtn.addActionListener(e -> {
             String user = usernameField.getText();
             String pass = new String(passwordField.getPassword());
+            if(user.length() <= 0 || pass.length() <= 0){
+                JOptionPane.showMessageDialog(
+                        registerFrame,
+                        "Username and password cannot be empty!",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
 
             boolean success = auth.register(user, pass);
 
@@ -96,7 +103,7 @@ public class RegisterScreen {
                 JOptionPane.showMessageDialog(registerFrame,
                         "Registration Failed, Try again!",
                         "Failed",
-                        JOptionPane.INFORMATION_MESSAGE );
+                        JOptionPane.ERROR_MESSAGE );
             }
         });
 

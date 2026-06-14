@@ -1,6 +1,5 @@
 package ui;
 
-import controllers.AuthController;
 import fileHandler.FileHandler;
 
 import javax.swing.*;
@@ -106,7 +105,7 @@ public class LoginScreen {
                 JOptionPane.showMessageDialog(loginFrame,
                         "Login Failed, Try again!",
                         "Failed",
-                        JOptionPane.INFORMATION_MESSAGE );
+                        JOptionPane.ERROR_MESSAGE );
             }
         });
 
