@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class FileHandler {
-    //    save to file
+//   x --------- Employees CRUD operations started ------------------ x
+
+    //    add to file
     public void saveEmployee(Employee emp){
         try{
             FileWriter writer = new FileWriter("src/data/employees.txt", true);
@@ -19,7 +21,7 @@ public class FileHandler {
             System.out.println(ex.getMessage());
         }
     }
-    //    display from file
+    //   Read from file
     public void displayEmployees(){
         try{
             int count = 0 ;
@@ -95,8 +97,6 @@ public class FileHandler {
             for(int i = 0 ; i < lines.size(); i++){
                 String line = lines.get(i);
                 writer.write(line);
-//                System.out.println("Line : " + line);
-
             }
             writer.close();
         }
@@ -105,4 +105,19 @@ public class FileHandler {
         }
 
     }
+//    x --------- Employees CRUD operations ended ------------------ x
+
+//    x --------- Auth operations started ------------------ x
+    public void register(String user, String pass){
+        try{
+            FileWriter writer = new FileWriter("src/data/users.txt", true);
+            writer.write();
+        }
+        catch(Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+    }
+
+
 }
