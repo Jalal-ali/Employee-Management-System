@@ -42,9 +42,9 @@ public class HomeScreen {
 
         JTextArea members = new JTextArea(
                 """
-                        • Jalal Ali
-                        • Member 2
-                        • Member 3"""
+                        • Jalal Ali  (IU02-0325-1543)
+                        • Yabish Ali (IU02-0325-1432)
+                        • Shah Nawaz (IU02-0325-1198)"""
         );
 
         members.setEditable(false);
