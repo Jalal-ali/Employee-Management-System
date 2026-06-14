@@ -19,25 +19,20 @@ public class SplashScreen  {
 
         JLabel title = new JLabel("EMPLOYEE MANAGEMENT SYSTEM");
         title.setFont(new Font("Arial", Font.BOLD, 24));
-        title.setBounds(120, 50, 500, 40);
+        title.setBounds(120, 70, 500, 40);
 
-        JLabel group = new JLabel("Group Members: Jalal Ali, Member 2, Member 3");
-        group.setFont(new Font("Arial", Font.PLAIN, 16));
-        group.setBounds(150, 120, 400, 30);
 
-        JLabel course = new JLabel("Object Oriented Programming");
-        course.setBounds(230, 150, 250, 25);
 
         loadingLabel = new JLabel("Loading...");
-        loadingLabel.setBounds(310, 250, 100, 25);
+        loadingLabel.setBounds(310, 150, 100, 25);
 
         progressBar = new JProgressBar(0, 100);
-        progressBar.setBounds(100, 290, 500, 25);
+        progressBar.setBounds(100, 190, 500, 25);
         progressBar.setStringPainted(true);
 
         panel.add(title);
-        panel.add(group);
-        panel.add(course);
+//        panel.add(group);
+//        panel.add(course);
         panel.add(loadingLabel);
         panel.add(progressBar);
 
@@ -47,7 +42,7 @@ public class SplashScreen  {
 
     private void startLoading() {
 
-        Timer timer = new Timer(60, null);
+        Timer timer = new Timer(10, null);
 
         timer.addActionListener(e -> {
             int value = progressBar.getValue();
@@ -55,7 +50,7 @@ public class SplashScreen  {
             if (value >= 99) {
                 timer.stop();
                 splashFrame.dispose();
-                new LoginScreen();
+                new HomeScreen();
             }
         });
 

@@ -109,7 +109,7 @@ public class FileHandler {
 
 //    x --------- Auth operations started ------------------ x
 //    register
-    public void register(String user, String pass){
+    public boolean register(String user, String pass){
         try{
             FileReader reader = new FileReader("src/data/users.txt");
             Scanner sc = new Scanner(reader);
@@ -119,21 +119,23 @@ public class FileHandler {
                 String userName = data[0];
                 if (userName.equals(user)) {
                     System.out.println("User " + user + " already exist.");
-                    return ;
+                    return false ;
                 }
             }
             FileWriter writer = new FileWriter("src/data/users.txt", true);
             writer.write(user + "," + pass + "\n");
             writer.close();
             System.out.println("Registered Successfully!");
+            return true ;
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
+            return false ;
         }
 
     }
 //    login
-    public void login(String reqUser, String reqPass){
+    public boolean login(String reqUser, String reqPass){
         try{
             FileReader reader = new FileReader("src/data/users.txt");
             Scanner sc = new Scanner(reader);
@@ -143,15 +145,16 @@ public class FileHandler {
                 String userName = data[0];
                 String pass = data[1];
                 if(userName.equals(reqUser) && reqPass.equals(pass)){
-                    System.out.println("Login Successfully!");
-                    return;
-                }else{
-                    System.out.println("Invalid credentials.");
+                    System.out.println("Logged in Successfully!");
+                    return true;
                 }
             }
+            return false ;
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
+            return false ;
+
         }
 
     }
