@@ -160,8 +160,6 @@ public class LoginScreen {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 try {
-
-
                     String username = JOptionPane.showInputDialog(
                             loginFrame,
                             "Enter your username:"
@@ -183,16 +181,12 @@ public class LoginScreen {
                         );
                         return;
                     }
-
                     String cred = auth.updatePass(username, pass);
-//                String[] data = cred.split(",");
-//                String user = data[0];
-//                String password = data[1];
 
-                    if (cred.length() > 0) {
+                    if (cred != null) {
                         JOptionPane.showMessageDialog(
                                 loginFrame,
-                                "Credentials updated ",
+                                cred,
                                 "Password Recovery",
                                 JOptionPane.INFORMATION_MESSAGE
                         );

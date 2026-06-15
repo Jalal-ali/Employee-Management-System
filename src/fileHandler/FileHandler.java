@@ -220,26 +220,40 @@ public String updatePass(String username, String newPass) {
     try {
         FileReader reader = new FileReader("src/data/users.txt");
         Scanner sc = new Scanner(reader);
-        String line;
+        List<String> lines = new ArrayList<>();
+        boolean success = false ;
 
         while (sc.hasNextLine()) {
-            line = sc.nextLine();
+            String line = sc.nextLine();
             String[] data = line.split(",");
-
+//            if matches
             if (data[0].equals(username)) {
                 data[1] = newPass;
                 line = String.join("," , data);
-                reader.close();
-                return line;
+                success = true ;
             }
+            lines.add(line + "\n");
+        }
+        reader.close();
+        if(!success){
+            return "Invalid input, Try again!" ;
+        }
+        else{
+//        write to file
+            FileWriter writer = new FileWriter("src/data/users.txt");
+            for(int i = 0 ; i < lines.size(); i++){
+                String line = lines.get(i);
+                writer.write(line);
+            }
+            writer.close();
+            return "Credentials updated ";
         }
 
-        reader.close();
+
     } catch (Exception e) {
         e.printStackTrace();
+        return e.getMessage() ;
     }
-
-    return null;
 }
 
 

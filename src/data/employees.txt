@@ -1,5 +1,0 @@
-10,shahnawaz,it,user
-65,umar,it,user
-45,umar,it,user
-35,yabish,cs,user
-500,hello,world,user

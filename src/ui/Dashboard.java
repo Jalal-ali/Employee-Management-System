@@ -46,13 +46,18 @@ public class Dashboard {
         header.setBorder(new EmptyBorder(10, 20, 10, 20));
         header.setBackground(Color.WHITE);
 
-        JLabel title = new JLabel("Employee Management System");
+        JLabel title = new JLabel("Employee Management System - Dashboard");
         title.setFont(new Font("Segoe UI", Font.BOLD, 24));
 
         JButton logoutBtn = new JButton("Logout");
 
         header.add(title, BorderLayout.WEST);
         header.add(logoutBtn, BorderLayout.EAST);
+
+        logoutBtn.addActionListener(e -> {
+            new LoginScreen();
+            frame.dispose();
+        });
 
         return header;
     }
