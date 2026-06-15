@@ -158,83 +158,109 @@ public class Dashboard {
         return card;
     }
 //    add
-    private JPanel createAddEmployeePage() {
+private JPanel createAddEmployeePage() {
 
-        JPanel panel = new JPanel(new GridBagLayout());
+    JPanel panel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10,10,10,10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JTextField idField = new JTextField(20);
-        JTextField nameField = new JTextField(20);
-        JTextField deptField = new JTextField(20);
+    JTextField idField = new JTextField(20);
+    JTextField nameField = new JTextField(20);
+    JTextField deptField = new JTextField(20);
 
-        JButton saveBtn = new JButton("Save Employee");
+    JButton saveBtn = new JButton("Save Employee (Ctrl+S)");
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(new JLabel("Employee ID"), gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    panel.add(new JLabel("Employee ID"), gbc);
 
-        gbc.gridx = 1;
-        panel.add(idField, gbc);
+    gbc.gridx = 1;
+    panel.add(idField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panel.add(new JLabel("Name"), gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    panel.add(new JLabel("Name"), gbc);
 
-        gbc.gridx = 1;
-        panel.add(nameField, gbc);
+    gbc.gridx = 1;
+    panel.add(nameField, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel.add(new JLabel("Department"), gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    panel.add(new JLabel("Department"), gbc);
 
-        gbc.gridx = 1;
-        panel.add(deptField, gbc);
+    gbc.gridx = 1;
+    panel.add(deptField, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        panel.add(saveBtn, gbc);
-        saveBtn.addActionListener(e ->{
-            try{
-                Employee emp = new Employee();
-                emp.id = Integer.parseInt(idField.getText()) ;
-                emp.name = nameField.getText();
-                emp.department = deptField.getText();
-                if(emp.id <= 0 || emp.name.length() <= 0 || emp.department.length() <= 0){
-                    JOptionPane.showMessageDialog(
-                            frame,
-                            "Any input field cannot be empty!",
-                            "Invalid Input",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                    return;
-                }
-                boolean success = fileHandler.saveEmployee(emp);
-                if (success) {
-                    JOptionPane.showMessageDialog(
-                            frame,
-                            "Employee added successfully!",
-                            "Success",
-                            JOptionPane.INFORMATION_MESSAGE
-                    );
-                }else{
-                    JOptionPane.showMessageDialog(frame,
-                            "Operation Failed, Try again!",
-                            "Failed",
-                            JOptionPane.ERROR_MESSAGE );
-                }
+    gbc.gridx = 1;
+    gbc.gridy = 4;
+    panel.add(saveBtn, gbc);
 
+    saveBtn.addActionListener(e -> {
+        try {
+            Employee emp = new Employee();
+            emp.id = Integer.parseInt(idField.getText());
+            emp.name = nameField.getText();
+            emp.department = deptField.getText();
+
+            if (emp.id <= 0 || emp.name.length() <= 0 || emp.department.length() <= 0) {
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Any input field cannot be empty!",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
             }
-            catch(NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null, "Please enter a valid numeric ID");
-                }
-        });
 
-        return panel;
-    }
-//    search emp
+            boolean success = fileHandler.saveEmployee(emp);
+
+            if (success) {
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Employee added successfully!",
+                        "Success",
+                        JOptionPane.INFORMATION_MESSAGE
+                );
+
+                idField.setText("");
+                nameField.setText("");
+                deptField.setText("");
+                idField.requestFocus();
+            } else {
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Operation Failed, Try again!",
+                        "Failed",
+                        JOptionPane.ERROR_MESSAGE
+                );
+            }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "Please enter a valid numeric ID",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    });
+
+    KeyStroke ctrlS = KeyStroke.getKeyStroke("control S");
+
+    panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+            .put(ctrlS, "saveEmployee");
+
+    panel.getActionMap().put("saveEmployee", new AbstractAction() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            saveBtn.doClick();
+        }
+    });
+
+    return panel;
+}//    search emp
     private JPanel createSearchPage() {
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -354,70 +380,100 @@ private JPanel createDeletePage() {
     return panel;
 }
 //update
-    private JPanel createUpdatePage() {
+private JPanel createUpdatePage() {
 
-        JPanel panel = new JPanel(new GridBagLayout());
+    JPanel panel = new JPanel(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10,10,10,10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JTextField idField = new JTextField(20);
-        JTextField nameField = new JTextField(20);
-        JTextField deptField = new JTextField(20);
+    JTextField idField = new JTextField(20);
+    JTextField nameField = new JTextField(20);
+    JTextField deptField = new JTextField(20);
 
-        JButton updateBtn = new JButton("Update Employee");
+    JButton updateBtn = new JButton("Update Employee (Ctrl+S)");
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(new JLabel("Employee ID"), gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    panel.add(new JLabel("Employee ID"), gbc);
 
-        gbc.gridx = 1;
-        panel.add(idField, gbc);
+    gbc.gridx = 1;
+    panel.add(idField, gbc);
 
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    panel.add(new JLabel("Name"), gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        panel.add(new JLabel("Name"), gbc);
+    gbc.gridx = 1;
+    panel.add(nameField, gbc);
 
-        gbc.gridx = 1;
-        panel.add(nameField, gbc);
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    panel.add(new JLabel("Department"), gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        panel.add(new JLabel("Department"), gbc);
+    gbc.gridx = 1;
+    panel.add(deptField, gbc);
 
-        gbc.gridx = 1;
-        panel.add(deptField, gbc);
+    gbc.gridx = 1;
+    gbc.gridy = 4;
+    panel.add(updateBtn, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        panel.add(updateBtn, gbc);
-        updateBtn.addActionListener(e ->{
-            try{
-                int id = Integer.parseInt(idField.getText()) ;
-                if(id <= 0){
-                    JOptionPane.showMessageDialog(
-                            frame,
-                            "Enter a valid ID!",
-                            "Invalid Input",
-                            JOptionPane.ERROR_MESSAGE
-                    );
-                    return;
-                }
-                String newName = nameField.getText();
-                String newDept = deptField.getText();
-                fileHandler.update(id,newName,newDept);
-                JOptionPane.showMessageDialog(frame,"Update Successfully!"
+    updateBtn.addActionListener(e -> {
+        try {
+            int id = Integer.parseInt(idField.getText());
+
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Enter a valid ID!",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
                 );
+                return;
             }
-            catch(NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid numeric ID");
-            }
-        });
 
-        return panel;
-    }
+            String newName = nameField.getText();
+            String newDept = deptField.getText();
+
+            fileHandler.update(id, newName, newDept);
+
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "Updated Successfully!",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            idField.setText("");
+            nameField.setText("");
+            deptField.setText("");
+            idField.requestFocus();
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "Please enter a valid numeric ID",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    });
+
+    KeyStroke ctrlS = KeyStroke.getKeyStroke("control S");
+
+    panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+            .put(ctrlS, "updateEmployee");
+
+    panel.getActionMap().put("updateEmployee", new AbstractAction() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent e) {
+            updateBtn.doClick();
+        }
+    });
+
+    return panel;
+}
     private JPanel createViewEmployeesPage() {
 
         JPanel panel = new JPanel(new BorderLayout());

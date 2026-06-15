@@ -21,7 +21,7 @@ public class RegisterScreen {
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
-        panel.setBounds(50, 100, 380, 380);
+        panel.setBounds(50, 100, 380, 400);
 
         JLabel title = new JLabel("REGISTER");
         title.setFont(new Font("Arial", Font.BOLD, 28));
@@ -33,6 +33,7 @@ public class RegisterScreen {
         subtitle.setHorizontalAlignment(SwingConstants.CENTER);
         subtitle.setBounds(0, 50, 380, 25);
 
+//        inputs
         JLabel userLabel = new JLabel("Username");
         userLabel.setFont(new Font("Arial", Font.BOLD, 14));
         userLabel.setBounds(40, 100, 100, 25);
@@ -47,19 +48,36 @@ public class RegisterScreen {
         JPasswordField passwordField = new JPasswordField();
         passwordField.setBounds(40, 205, 300, 35);
 
+        char defaultEchoChar = passwordField.getEchoChar();
+
+        JCheckBox showPassword = new JCheckBox("Show Password");
+        showPassword.setBounds(40, 245, 150, 20);
+
+
+//        forgot
+        JLabel forgotPassword = new JLabel("<html><u>Forgot Password?</u></html>");
+        forgotPassword.setFont(new Font("Arial", Font.PLAIN, 12));
+        forgotPassword.setForeground(Color.BLUE);
+        forgotPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        forgotPassword.setBounds(220, 245, 120, 20);
+
         JButton registerBtn = new JButton("Register");
         registerBtn.setFont(new Font("Arial", Font.BOLD, 14));
-        registerBtn.setBounds(120, 270, 140, 40);
+        registerBtn.setBounds(40, 285, 140, 40);
+
+        JButton clearBtn = new JButton("Clear");
+        clearBtn.setFont(new Font("Arial", Font.BOLD, 14));
+        clearBtn.setBounds(200, 285, 140, 40);
 
         JLabel accountLabel = new JLabel("Already have an account?");
         accountLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-        accountLabel.setBounds(70, 340, 150, 20);
-
+        accountLabel.setBounds(70, 350, 150, 20);
+//        login link
         JLabel loginLink = new JLabel("<html><u>Login</u></html>");
         loginLink.setFont(new Font("Arial", Font.BOLD, 12));
         loginLink.setForeground(Color.BLUE);
         loginLink.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        loginLink.setBounds(220, 340, 60, 20);
+        loginLink.setBounds(220, 350, 60, 20);
 
         panel.add(title);
         panel.add(subtitle);
@@ -67,17 +85,23 @@ public class RegisterScreen {
         panel.add(usernameField);
         panel.add(passLabel);
         panel.add(passwordField);
+        panel.add(showPassword);
         panel.add(registerBtn);
         panel.add(accountLabel);
         panel.add(loginLink);
+        panel.add(clearBtn);
+        panel.add(forgotPassword);
 
         registerFrame.add(panel);
         registerFrame.setVisible(true);
 
+//        funcs ------
         registerBtn.addActionListener(e -> {
             String user = usernameField.getText();
             String pass = new String(passwordField.getPassword());
-            if(user.length() <= 0 || pass.length() <= 0){
+
+//            if inputs are empty
+            if (user.length() < 1 || pass.length() < 1) {
                 JOptionPane.showMessageDialog(
                         registerFrame,
                         "Username and password cannot be empty!",
@@ -88,22 +112,22 @@ public class RegisterScreen {
             }
 
             boolean success = auth.register(user, pass);
-
+//            if reg is succeeded
             if (success) {
-                JOptionPane.showMessageDialog(
-                        registerFrame,
+                JOptionPane.showMessageDialog(registerFrame,
                         "Registration successful!",
                         "Success",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
+                        JOptionPane.INFORMATION_MESSAGE);
 
                 new LoginScreen();
                 registerFrame.dispose();
-            }else{
-                JOptionPane.showMessageDialog(registerFrame,
+            } else {
+                JOptionPane.showMessageDialog(
+                        registerFrame,
                         "Registration Failed, Try again!",
                         "Failed",
-                        JOptionPane.ERROR_MESSAGE );
+                        JOptionPane.ERROR_MESSAGE
+                );
             }
         });
 
@@ -112,6 +136,54 @@ public class RegisterScreen {
             public void mouseClicked(java.awt.event.MouseEvent e) {
                 new LoginScreen();
                 registerFrame.dispose();
+            }
+        });
+        showPassword.addActionListener(e -> {
+            if (showPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar(defaultEchoChar);
+            }
+        });
+
+        clearBtn.addActionListener(e -> {
+            usernameField.setText("");
+            passwordField.setText("");
+            showPassword.setSelected(false);
+            passwordField.setEchoChar(defaultEchoChar);
+            usernameField.requestFocus();
+        });
+
+        forgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+
+                String username = JOptionPane.showInputDialog(
+                        registerFrame,
+                        "Enter your username:"
+                );
+
+                if (username == null || username.trim().isEmpty()) {
+                    return;
+                }
+
+                String password = auth.getPassword(username);
+
+                if (password != null) {
+                    JOptionPane.showMessageDialog(
+                            registerFrame,
+                            "Your password is: " + password,
+                            "Password Recovery",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                } else {
+                    JOptionPane.showMessageDialog(
+                            registerFrame,
+                            "Username not found!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
     }

@@ -1,13 +1,8 @@
-import controllers.EmployeesController;
 import fileHandler.FileHandler;
-import ui.LoginScreen;
-import ui.RegisterScreen;
 import ui.SplashScreen;
-
 import javax.swing.*;
 
 void main(String[] args) {
-  EmployeesController e = new EmployeesController();
   FileHandler fileHandler = new FileHandler();
   Scanner sc = new Scanner(System.in);
   SwingUtilities.invokeLater(() -> {
@@ -25,17 +20,17 @@ void main(String[] args) {
     System.out.print("Choice (1-5): ");
     int choice = sc.nextInt();
 
-    switch (choice) {
-      case 1 -> e.addEmployee();
-      case 2 -> e.showEmployees();
-      case 3 -> e.updateEmployee();
-      case 4 -> e.deleteEmployee();
-      case 5 -> new RegisterScreen();
-      case 6 -> new LoginScreen();
-      case 7 -> System.out.println(fileHandler.searchEmployee(10));
-//      case 5 -> System.exit(0);
-      default -> System.out.println("Invalid");
-    }
+//    switch (choice) {
+//      case 1 -> e.addEmployee();
+//      case 2 -> e.showEmployees();
+//      case 3 -> e.updateEmployee();
+//      case 4 -> e.deleteEmployee();
+//      case 5 -> new RegisterScreen();
+//      case 6 -> new LoginScreen();
+//      case 7 -> System.out.println(fileHandler.searchEmployee(10));
+////      case 5 -> System.exit(0);
+//      default -> System.out.println("Invalid");
+//    }
   }
 
 }

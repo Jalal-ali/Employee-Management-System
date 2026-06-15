@@ -1,7 +1,5 @@
 package fileHandler;
 import models.Employee;
-
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -216,6 +214,31 @@ public class FileHandler {
         }
 
     }
+
+//    forgot pass
+public String getPassword(String username) {
+    try {
+        FileReader reader = new FileReader("src/data/users.txt");
+        Scanner sc = new Scanner(reader);
+        String line;
+
+        while (sc.hasNextLine()) {
+            line = sc.nextLine();
+            String[] data = line.split(",");
+
+            if (data[0].equals(username)) {
+                reader.close();
+                return data[1];
+            }
+        }
+
+        reader.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
 
 
 }
