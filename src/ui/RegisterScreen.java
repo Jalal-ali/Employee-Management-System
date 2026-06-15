@@ -172,22 +172,19 @@ public class RegisterScreen {
                                 "Username is required."
                         );
                         return;
-                    }if (pass == null || pass.trim().isEmpty()) {
+                    }
+                    if (pass == null || pass.trim().isEmpty()) {
                         JOptionPane.showMessageDialog(registerFrame,
                                 "Password is required."
                         );
                         return;
                     }
+                    String cred = auth.updatePass(username, pass);
 
-                    String cred = auth.updatePass(username,pass);
-//                String[] data = cred.split(",");
-//                String user = data[0];
-//                String password = data[1];
-
-                    if (cred.length() > 0 ) {
+                    if (cred != null) {
                         JOptionPane.showMessageDialog(
                                 registerFrame,
-                                "Credentials updated ",
+                                cred,
                                 "Password Recovery",
                                 JOptionPane.INFORMATION_MESSAGE
                         );
@@ -199,9 +196,7 @@ public class RegisterScreen {
                                 JOptionPane.ERROR_MESSAGE
                         );
                     }
-
-                }
-                catch(Exception ex){
+                }catch(Exception ex){
                     JOptionPane.showMessageDialog(
                             registerFrame,
                             "Failed to update, Try again!",
