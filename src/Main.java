@@ -1,36 +1,11 @@
-import fileHandler.FileHandler;
 import ui.SplashScreen;
 import javax.swing.*;
 
 void main(String[] args) {
-  FileHandler fileHandler = new FileHandler();
-  Scanner sc = new Scanner(System.in);
+
   SwingUtilities.invokeLater(() -> {
     SplashScreen splash = new SplashScreen();
     splash.splashFrame.setVisible(true);
   });
-  while (true) {
-    System.out.println("\n1. Add an Employee");
-    System.out.println("2. Show all Employees");
-    System.out.println("3. Update an Employee");
-    System.out.println("4. Delete an Employee");
-    System.out.println("5. Register");
-    System.out.println("6. Login");
-    System.out.println("7. Exit");
-    System.out.print("Choice (1-5): ");
-    int choice = sc.nextInt();
-
-//    switch (choice) {
-//      case 1 -> e.addEmployee();
-//      case 2 -> e.showEmployees();
-//      case 3 -> e.updateEmployee();
-//      case 4 -> e.deleteEmployee();
-//      case 5 -> new RegisterScreen();
-//      case 6 -> new LoginScreen();
-//      case 7 -> System.out.println(fileHandler.searchEmployee(10));
-////      case 5 -> System.exit(0);
-//      default -> System.out.println("Invalid");
-//    }
-  }
-
+  
 }
