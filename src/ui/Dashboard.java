@@ -111,9 +111,9 @@ public class Dashboard {
 
         contentPanel.add(createDashboardPage(), "dashboard");
         contentPanel.add(createAddEmployeePage(), "add");
-        contentPanel.add(createSimplePage("Search Employee"), "search");
-        contentPanel.add(createSimplePage("Update Employee"), "update");
-        contentPanel.add(createSimplePage("Delete Employee"), "delete");
+        contentPanel.add(createSearchPage(), "search");
+        contentPanel.add(createUpdatePage(), "update");
+        contentPanel.add(createDeletePage(), "delete");
         contentPanel.add(createViewEmployeesPage(), "view");
     }
 
@@ -123,7 +123,7 @@ public class Dashboard {
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         JPanel cardsPanel = new JPanel(new GridLayout(1, 3, 20, 20));
-        String totalEmp = fileHandler.displayEmployees();
+        String totalEmp = fileHandler.employeesCount();
         cardsPanel.add(createCard("Total Employees", totalEmp));
         cardsPanel.add(createCard("Departments", "5"));
 
@@ -157,7 +157,7 @@ public class Dashboard {
 
         return card;
     }
-
+//    add
     private JPanel createAddEmployeePage() {
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -202,6 +202,15 @@ public class Dashboard {
                 emp.id = Integer.parseInt(idField.getText()) ;
                 emp.name = nameField.getText();
                 emp.department = deptField.getText();
+                if(emp.id <= 0 || emp.name.length() <= 0 || emp.department.length() <= 0){
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Any input field cannot be empty!",
+                            "Invalid Input",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
                 boolean success = fileHandler.saveEmployee(emp);
                 if (success) {
                     JOptionPane.showMessageDialog(
@@ -225,7 +234,190 @@ public class Dashboard {
 
         return panel;
     }
+//    search emp
+    private JPanel createSearchPage() {
 
+        JPanel panel = new JPanel(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10,10,10,10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JTextField idField = new JTextField(20);
+
+        JButton searchBtn = new JButton("Search Employee");
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Employee ID"), gbc);
+
+        gbc.gridx = 1;
+        panel.add(idField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        panel.add(searchBtn, gbc);
+        searchBtn.addActionListener(e ->{
+            try{
+                int id = Integer.parseInt(idField.getText()) ;
+                if(id <= 0){
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Enter a valid ID!",
+                            "Invalid Input",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
+                String employee = fileHandler.searchEmployee(id);
+                String[] data = employee.split(",");
+
+                JPanel panel1 = new JPanel(new GridLayout(4, 2, 10, 10));
+
+                panel1.add(new JLabel("ID:"));
+                panel1.add(new JLabel(data[0]));
+
+                panel1.add(new JLabel("Name:"));
+                panel1.add(new JLabel(data[1]));
+
+                panel1.add(new JLabel("Department:"));
+                panel1.add(new JLabel(data[2]));
+
+                panel1.add(new JLabel("Role:"));
+                panel1.add(new JLabel(data[3]));
+
+
+                if (employee.length() > 0) {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            panel1,
+                            "Employee Details",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }else{
+                    JOptionPane.showMessageDialog(panel1,
+                            "Unable to find!",
+                            "Failed",
+                            JOptionPane.ERROR_MESSAGE );
+                }
+            }
+            catch(NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid numeric ID");
+                }
+        });
+
+        return panel;
+    }
+//    delete
+private JPanel createDeletePage() {
+
+    JPanel panel = new JPanel(new GridBagLayout());
+
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10,10,10,10);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
+
+    JTextField idField = new JTextField(20);
+
+    JButton deleteBtn = new JButton("Delete Employee");
+
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    panel.add(new JLabel("Employee ID"), gbc);
+
+    gbc.gridx = 1;
+    panel.add(idField, gbc);
+
+    gbc.gridx = 1;
+    gbc.gridy = 4;
+    panel.add(deleteBtn, gbc);
+    deleteBtn.addActionListener(e ->{
+        try{
+            int id = Integer.parseInt(idField.getText()) ;
+            if(id <= 0){
+                JOptionPane.showMessageDialog(
+                        frame,
+                        "Enter a valid ID!",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+            fileHandler.delete(id);
+            JOptionPane.showMessageDialog(frame,"Deleted Successfully!");
+        }
+        catch(NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid numeric ID");
+        }
+    });
+
+    return panel;
+}
+//update
+    private JPanel createUpdatePage() {
+
+        JPanel panel = new JPanel(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10,10,10,10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        JTextField idField = new JTextField(20);
+        JTextField nameField = new JTextField(20);
+        JTextField deptField = new JTextField(20);
+
+        JButton updateBtn = new JButton("Update Employee");
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Employee ID"), gbc);
+
+        gbc.gridx = 1;
+        panel.add(idField, gbc);
+
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel("Name"), gbc);
+
+        gbc.gridx = 1;
+        panel.add(nameField, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Department"), gbc);
+
+        gbc.gridx = 1;
+        panel.add(deptField, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        panel.add(updateBtn, gbc);
+        updateBtn.addActionListener(e ->{
+            try{
+                int id = Integer.parseInt(idField.getText()) ;
+                if(id <= 0){
+                    JOptionPane.showMessageDialog(
+                            frame,
+                            "Enter a valid ID!",
+                            "Invalid Input",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                    return;
+                }
+                String newName = nameField.getText();
+                String newDept = deptField.getText();
+                fileHandler.update(id,newName,newDept);
+                JOptionPane.showMessageDialog(frame,"Update Successfully!"
+                );
+            }
+            catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid numeric ID");
+            }
+        });
+
+        return panel;
+    }
     private JPanel createViewEmployeesPage() {
 
         JPanel panel = new JPanel(new BorderLayout());
@@ -234,13 +426,12 @@ public class Dashboard {
                 "ID",
                 "Name",
                 "Department",
-                "Salary"
+                "Role"
         };
 
-        Object[][] data = {
-                {"101", "Ali", "IT", "50000"},
-                {"102", "Ahmed", "HR", "45000"}
-        };
+
+
+        Object[][] data = fileHandler.displayEmployees();
 
         JTable table = new JTable(data, columns);
 

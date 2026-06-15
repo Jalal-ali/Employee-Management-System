@@ -33,8 +33,8 @@ public class FileHandler {
             return false;
         }
     }
-    //   Read from file
-    public String displayEmployees(){
+    //   Count emps from file
+    public String employeesCount(){
         try{
             int count = 0 ;
             FileReader reader = new FileReader("src/data/employees.txt");
@@ -43,10 +43,8 @@ public class FileHandler {
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
                 if(line.length() > 0){
-
                     count++ ;
                 }
-//                System.out.println(count + ". " + line);
             }
             sc.close();
             return String.valueOf(count);
@@ -56,7 +54,30 @@ public class FileHandler {
         }
         return null ;
     }
-//    search employee
+    public Object[][] displayEmployees() {
+        List<Object[]> rows = new ArrayList<>();
+
+        try {
+            FileReader reader = new FileReader("src/data/employees.txt");
+            Scanner sc = new Scanner(reader);
+            while (sc.hasNextLine()) {
+                String[] data = sc.nextLine().split(",");
+
+                rows.add(new Object[]{
+                        Integer.parseInt(data[0]),
+                        data[1],
+                        data[2],
+                        data[3]
+                });
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rows.toArray(new Object[0][]);
+    }
+//    search single employee
     public String searchEmployee(int targetedId){
         try{
             FileReader reader = new FileReader("src/data/employees.txt");
@@ -67,8 +88,6 @@ public class FileHandler {
                 String[] data = line.split(",");
                 int id = Integer.parseInt(data[0]);
                 if(id == targetedId){
-                    line = data[1] ;
-                    System.out.println("emp :" + line);
                     return line ;
                 }
             }
