@@ -157,29 +157,54 @@ public class RegisterScreen {
         forgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
-
-                String username = JOptionPane.showInputDialog(
-                        registerFrame,
-                        "Enter your username:"
-                );
-
-                if (username == null || username.trim().isEmpty()) {
-                    return;
-                }
-
-                String password = auth.getPassword(username);
-
-                if (password != null) {
-                    JOptionPane.showMessageDialog(
+                try {
+                    String username = JOptionPane.showInputDialog(
                             registerFrame,
-                            "Your password is: " + password,
-                            "Password Recovery",
-                            JOptionPane.INFORMATION_MESSAGE
+                            "Enter your username:"
                     );
-                } else {
+                    String pass = JOptionPane.showInputDialog(
+                            registerFrame,
+                            "Enter your new password:"
+                    );
+
+                    if (username == null || username.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(registerFrame,
+                                "Username is required."
+                        );
+                        return;
+                    }if (pass == null || pass.trim().isEmpty()) {
+                        JOptionPane.showMessageDialog(registerFrame,
+                                "Password is required."
+                        );
+                        return;
+                    }
+
+                    String cred = auth.updatePass(username,pass);
+//                String[] data = cred.split(",");
+//                String user = data[0];
+//                String password = data[1];
+
+                    if (cred.length() > 0 ) {
+                        JOptionPane.showMessageDialog(
+                                registerFrame,
+                                "Credentials updated ",
+                                "Password Recovery",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                registerFrame,
+                                "Username not found!",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                }
+                catch(Exception ex){
                     JOptionPane.showMessageDialog(
                             registerFrame,
-                            "Username not found!",
+                            "Failed to update, Try again!",
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );

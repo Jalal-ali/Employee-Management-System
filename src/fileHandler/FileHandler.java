@@ -216,7 +216,7 @@ public class FileHandler {
     }
 
 //    forgot pass
-public String getPassword(String username) {
+public String updatePass(String username, String newPass) {
     try {
         FileReader reader = new FileReader("src/data/users.txt");
         Scanner sc = new Scanner(reader);
@@ -227,8 +227,10 @@ public String getPassword(String username) {
             String[] data = line.split(",");
 
             if (data[0].equals(username)) {
+                data[1] = newPass;
+                line = String.join("," , data);
                 reader.close();
-                return data[1];
+                return line;
             }
         }
 
