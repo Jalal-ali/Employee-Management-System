@@ -1,5 +1,7 @@
 package fileHandler;
 import models.Employee;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -12,6 +14,14 @@ public class FileHandler {
     //    add to file
     public boolean saveEmployee(Employee emp){
         try{
+            File file = new File("src/data/employees.txt");
+            if(file.createNewFile()){
+                System.out.println("File created: " + file.getName());
+            }
+            else{
+                System.out.println("File already exist.");
+
+            }
             FileReader reader = new FileReader("src/data/employees.txt");
             Scanner sc =new Scanner(reader);
             while(sc.hasNextLine()){
@@ -34,18 +44,24 @@ public class FileHandler {
     //   Count emps from file
     public String employeesCount(){
         try{
-            int count = 0 ;
-            FileReader reader = new FileReader("src/data/employees.txt");
-            Scanner sc = new Scanner(reader);
+            if(new File("src/data/employees.txt").exists()){
+                int count = 0 ;
+                FileReader reader = new FileReader("src/data/employees.txt");
+                Scanner sc = new Scanner(reader);
 
-            while(sc.hasNextLine()){
-                String line = sc.nextLine();
-                if(line.length() > 0){
-                    count++ ;
+                while(sc.hasNextLine()){
+                    String line = sc.nextLine();
+                    if(line.length() > 0){
+                        count++ ;
+                    }
                 }
+                sc.close();
+                return String.valueOf(count);
             }
-            sc.close();
-            return String.valueOf(count);
+            else{
+                System.out.println("No employees found!");
+                return "0" ;
+            }
         }
         catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -53,27 +69,32 @@ public class FileHandler {
         return null ;
     }
     public Object[][] displayEmployees() {
-        List<Object[]> rows = new ArrayList<>();
-
         try {
-            FileReader reader = new FileReader("src/data/employees.txt");
-            Scanner sc = new Scanner(reader);
-            while (sc.hasNextLine()) {
-                String[] data = sc.nextLine().split(",");
-
-                rows.add(new Object[]{
-                        Integer.parseInt(data[0]),
-                        data[1],
-                        data[2],
-                        data[3]
-                });
+            if(new File("src/data/employees.txt").exists()){
+                List<Object[]> rows = new ArrayList<>();
+                FileReader reader = new FileReader("src/data/employees.txt");
+                Scanner sc = new Scanner(reader);
+                while (sc.hasNextLine()) {
+                    String[] data = sc.nextLine().split(",");
+                    rows.add(new Object[]{
+                            Integer.parseInt(data[0]),
+                            data[1],
+                            data[2],
+                            data[3]
+                    });
+                }
+                return rows.toArray(new Object[0][]);
+            }
+            else{
+                System.out.println("File not Found!");
+                return new Object[0][0];
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return rows.toArray(new Object[0][]);
+        return new Object[0][0];
     }
 //    search single employee
     public String searchEmployee(int targetedId){
@@ -167,7 +188,13 @@ public class FileHandler {
 //    register
     public boolean register(String user, String pass){
         try{
-            FileReader reader = new FileReader("src/data/users.txt");
+            File file = new File("src/data/users.txt");
+            if(!file.exists()){
+                file.createNewFile();
+                System.out.println("File Created: " + file.getName());
+            }
+//            FileReader reader = new FileReader("src/data/users.txt");
+            FileReader reader = new FileReader(file);
             Scanner sc = new Scanner(reader);
             while(sc.hasNextLine()) {
                 String line = sc.nextLine();

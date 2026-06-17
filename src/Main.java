@@ -7,5 +7,5 @@ void main(String[] args) {
     SplashScreen splash = new SplashScreen();
     splash.splashFrame.setVisible(true);
   });
-  
+
 }

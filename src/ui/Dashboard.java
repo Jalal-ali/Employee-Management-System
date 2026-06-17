@@ -770,6 +770,11 @@ public class Dashboard {
         };
 
         Object[][] data = fileHandler.displayEmployees();
+        if (data.length < 1) {
+            data = new Object[][]{
+                    {"-", "No employees found", "-", "-"}
+            };
+        }
 
         JTable table = new JTable(data, columns) {
             @Override
